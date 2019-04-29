@@ -1,0 +1,19 @@
+
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	root /var/www/html; # provides the root location of the web server
+
+	index index.html;
+
+	server_name _;
+
+	location / {
+		try_files $uri $uri/ =404;
+                allow 192.5.106.1; #The ip which needs to be whitelisted
+                deny all;
+	}
+
+}
+

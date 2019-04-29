@@ -1,0 +1,25 @@
+---
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+- name: Installing Nginx
+  apt:
+    name: nginx
+    state: latest
+
+- name: remove the old default file
+  command: sudo rm /etc/nginx/sites-enabled/default
+
+- name: Copying the default config file
+  copy:
+    src: "default"
+    dest: /etc/nginx/sites-enabled/default
+
+- name: Copying the index.html
+  copy:
+    src: "index.html"
+    dest: /var/www/html/index.html
+
+- name: restart nginx
+  service: name=nginx state=restarted
